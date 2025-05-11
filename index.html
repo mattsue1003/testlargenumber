@@ -10,25 +10,26 @@
     flex-direction: column;
     align-items: center;
     margin: 20px;
+    text-align: center; /* 讓文字居中 */
   }
   .container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     margin-bottom: 20px;
-    width: 80%; /* 調整容器寬度以適應手機 */
-    max-width: 400px; /* 設定最大寬度 */
+    width: 80%;
+    max-width: 400px;
   }
   .square {
     background-color: lightblue;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2em; /* 加大數字 */
+    font-size: 2em;
     cursor: pointer;
     border: 1px solid #ccc;
-    aspect-ratio: 1 / 1; /* 維持方塊比例 */
-    border-radius: 8px; /* 增加圓角 */
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
   }
   #timer {
     font-size: 1.5em;
@@ -50,6 +51,17 @@
     border: none;
     background-color: #007bff;
     color: white;
+    margin-bottom: 20px; /* 增加按鈕下方的間距 */
+  }
+  .follow-invite {
+    margin-top: 20px;
+    font-size: 1em;
+    color: #555;
+  }
+  .follow-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
   }
 </style>
 </head>
@@ -66,6 +78,12 @@
   </div>
   <button id="startButton">開始遊戲</button>
 
+  <div class="follow-invite">
+    喜歡這個小遊戲嗎？歡迎到我的粉絲團
+    <a class="follow-link" href="https://www.facebook.com/profile.php?id=100063748491881" target="_blank">鍾孟修Ｍatt-職能治療師</a>
+    按讚及追蹤，給我一點小小的鼓勵喔！
+  </div>
+
   <script>
     const squares = document.querySelectorAll('.square');
     const timerDisplay = document.getElementById('timer');
@@ -76,9 +94,8 @@
     let timeLeft = 60;
     let gameStarted = false;
     let timerInterval;
-    let bestScore = localStorage.getItem('bestScore') || 0; // 從 localStorage 載入最佳紀錄
+    let bestScore = localStorage.getItem('bestScore') || 0;
 
-    // 初始顯示最佳紀錄
     bestScoreDisplay.textContent = `最佳紀錄：${bestScore}`;
 
     function generateNumbers() {
@@ -122,13 +139,13 @@
 
     function startTimer() {
       gameStarted = true;
-      score = 0; // 開始新遊戲時重置分數
+      score = 0;
       scoreDisplay.textContent = `得分：${score}`;
-      timeLeft = 60; // 開始新遊戲時重置時間
+      timeLeft = 60;
       timerDisplay.textContent = `時間：${timeLeft} 秒`;
-      startButton.disabled = true; // 禁用開始按鈕直到遊戲結束
+      startButton.disabled = true;
 
-      updateGame(); // 遊戲開始時先產生第一組數字
+      updateGame();
 
       timerInterval = setInterval(() => {
         timeLeft--;
@@ -137,9 +154,8 @@
           clearInterval(timerInterval);
           gameStarted = false;
           timerDisplay.textContent = '時間到！';
-          startButton.disabled = false; // 啟用開始按鈕
+          startButton.disabled = false;
 
-          // 更新最佳紀錄
           if (score > bestScore) {
             bestScore = score;
             localStorage.setItem('bestScore', bestScore);
@@ -152,15 +168,12 @@
       }, 1000);
     }
 
-    // 為每個數字方塊添加點擊事件監聽器
     squares.forEach(square => {
       square.addEventListener('click', checkClick);
     });
 
-    // 為開始按鈕添加點擊事件監聽器
     startButton.addEventListener('click', startTimer);
 
-    // 初始載入時顯示最佳紀錄
     if (bestScore !== null) {
       bestScoreDisplay.textContent = `最佳紀錄：${bestScore}`;
     }
